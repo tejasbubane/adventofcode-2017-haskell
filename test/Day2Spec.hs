@@ -10,6 +10,13 @@ example1 =
   , [2, 4, 6, 8]
   ]
 
+example2 :: [[Int]]
+example2 =
+ [ [5, 9, 2, 8]
+ , [9, 4, 7, 3]
+ , [3, 8, 6, 5]
+ ]
+
 puzzleInput :: [[Int]]
 puzzleInput =
   [ [515, 912, 619, 2043, 96, 93, 2242, 1385, 2110, 860, 2255, 621, 1480, 118, 1230, 99]
@@ -34,6 +41,11 @@ specs :: SpecWith ()
 specs =  describe "Day 2" $ do
   describe "part 1" $ do
     it "solves given example sheet" $ do
-      checksum example1 `shouldBe` 18
+      checksum1 example1 `shouldBe` 18
     it "solves given puzzle input sheet" $ do
-      checksum puzzleInput `shouldBe` 45972
+      checksum1 puzzleInput `shouldBe` 45972
+  describe "part 2" $ do
+    it "solves given example sheet" $ do
+      checksum2 example2 `shouldBe` 9
+    it "solves given puzzle input sheet" $ do
+      checksum2 puzzleInput `shouldBe` 326
