@@ -45,3 +45,23 @@ specs =  describe "Day 3" $ do
       steps 1024 `shouldBe` 31
     it "works for puzzle input" $ do
       steps 347991 `shouldBe` 480
+
+  describe "part 2 - sum" $ do
+    it "works for 1" $ do
+      nextSum 1 `shouldBe` 2
+    it "works for 2" $ do
+      nextSum 2 `shouldBe` 4
+    it "works for 4" $ do
+      nextSum 4 `shouldBe` 5
+    it "works for 5" $ do
+      nextSum 5 `shouldBe` 10
+    it "works for 10" $ do
+      nextSum 10 `shouldBe` 11
+    it "works for 11" $ do
+      nextSum 11 `shouldBe` 23
+    it "works for 304" $ do
+      nextSum 304 `shouldBe` 330
+    it "works for 747" $ do
+      nextSum 747 `shouldBe` 806
+    it "works for puzzle input" $ do
+      nextSum 347991 `shouldBe` 349975

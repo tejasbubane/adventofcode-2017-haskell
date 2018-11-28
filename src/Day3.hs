@@ -1,6 +1,8 @@
 module Day3 where
 
 import Prelude hiding (Right, Left)
+import qualified Data.Map as M
+import Data.Maybe (fromMaybe)
 
 data Direction =
   Up | Down | Left | Right
@@ -36,5 +38,28 @@ steps num = traverseMemory 3 ((1, 1), Up) where
   traverseMemory i (c@(x, y), dir)
     | i == num  = abs x + abs y
       -- use new direction to calculate next coordinate
-    | otherwise = traverseMemory (i + 1) ((nextCoordinate c nDir), nDir) where
-        nDir = (nextDir c dir)
+    | otherwise = traverseMemory (i + 1) (nCoord, nDir) where
+        nCoord = nextCoordinate c nDir
+        nDir = nextDir c dir
+
+-- part 2
+adjacents :: Coordinate -> [Coordinate]
+adjacents (x, y) =
+  [ (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1) -- adjacents
+  , (x - 1, y - 1), (x - 1, y + 1), (x + 1, y - 1), (x + 1, y + 1) -- diagonals
+  ]
+
+nextVal :: M.Map (Int, Int) Int -> Int -> Coordinate -> Int
+nextVal acc currentVal cord =
+  foldr lookupAndSum currentVal $ adjacents cord where
+    lookupAndSum a b = b + (fromMaybe 0 $ M.lookup a acc)
+
+nextSum :: Int -> Int
+nextSum 1 = 2
+nextSum num = traverseGrid 2 ((1, 1), Up) $ M.fromList [((0, 0), 1), ((1, 0), 1)] where
+  traverseGrid i (cord, dir) acc
+    | i > num = i
+    | otherwise = traverseGrid nVal (nCoord, nDir) (M.insert cord i acc) where
+        nDir = nextDir cord dir
+        nCoord = nextCoordinate cord nDir
+        nVal = nextVal acc i nCoord
