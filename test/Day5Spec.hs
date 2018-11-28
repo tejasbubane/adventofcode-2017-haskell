@@ -12,9 +12,14 @@ specs =
   describe "Day 5" $ do
     describe "part 1 - steps to loop out" $ do
       it "works for test input" $ do
-        steps (listToArray testInput) `shouldBe` 5
+        steps1 (listToArray testInput) `shouldBe` 5
       it "works for puzzle input" $ do
-        steps (listToArray puzzleInput) `shouldBe` 373160
+        steps1 (listToArray puzzleInput) `shouldBe` 373160
+    describe "part 1 - steps to loop out with special-3 rule" $ do
+      it "works for test input" $ do
+        steps2 (listToArray testInput) `shouldBe` 10
+      it "works for puzzle input" $ do
+        steps2 (listToArray puzzleInput) `shouldBe` 26395586
 
 testInput :: [Int]
 testInput = [0, 3, 0, 1, -3]
