@@ -5,25 +5,46 @@ module Day4Spec where
 
 import Test.Hspec
 import Day4
-import qualified Data.Set as S
 import Text.RawString.QQ
-
-testPhrases :: String
-testPhrases = [r|aa bb cc dd ee
-                aa bb cc dd aa
-                aa bb cc dd aaa|]
 
 specs :: SpecWith ()
 specs = describe "Day 4" $ do
   describe "part 1 - count valid phrases" $ do
     it "checks phrase for duplicate words" $ do
-      checkPhrase S.empty ["aa", "bb", "cc", "dd", "ee"] `shouldBe` True
-      checkPhrase S.empty ["aa", "bb", "cc", "dd", "aa"] `shouldBe` False
-      checkPhrase S.empty ["aa", "bb", "cc", "dd", "aaa"] `shouldBe` True
+      noDups ["aa", "bb", "cc", "dd", "ee"] `shouldBe` True
+      noDups ["aa", "bb", "cc", "dd", "aa"] `shouldBe` False
+      noDups ["aa", "bb", "cc", "dd", "aaa"] `shouldBe` True
     it "counts valid phrases in test input" $ do
-      countValid testPhrases `shouldBe` 2
+      countNoDups dupTestPhrases `shouldBe` 2
     it "counts valid phrases in puzzle input" $ do
-      countValid puzzleInput `shouldBe` 466
+      countNoDups puzzleInput `shouldBe` 466
+
+  describe "part 2 - anagram duplicates" $ do
+    it "checks single phrase for anagrams" $ do
+      checkPhrase anagram ["abcde", "fghij"] `shouldBe` True
+      checkPhrase anagram ["abcde", "xyz", "ecdab"] `shouldBe` False
+      checkPhrase anagram ["a", "ab", "abc", "abd", "abf", "abj"] `shouldBe` True
+      checkPhrase anagram ["iiii", "oiii", "ooii", "oooi", "oooo"] `shouldBe` True
+      checkPhrase anagram ["oiii", "ioii", "iioi", "iiio"] `shouldBe` False
+    it "counts valid phrases with anagram check in test input" $ do
+      countNoAnagrams anagramTestPhrases `shouldBe` 3
+    it "counts valid phrases with anagram check in puzzle input" $ do
+      countNoAnagrams puzzleInput `shouldBe` 251
+
+-- Test inputs
+dupTestPhrases :: String
+dupTestPhrases =
+  [r|aa bb cc dd ee
+aa bb cc dd aa
+aa bb cc dd aaa|]
+
+anagramTestPhrases :: String
+anagramTestPhrases =
+  [r|abcde fghij
+abcde xyz ecdab
+a ab abc abd abf abj
+iiii oiii ooii oooi oooo
+oiii ioii iioi iiio|]
 
 puzzleInput :: String
 puzzleInput = [r|pphsv ojtou brvhsj cer ntfhlra udeh ccgtyzc zoyzmh jum lugbnk
