@@ -15,7 +15,7 @@ specs =
         steps1 (listToArray testInput) `shouldBe` 5
       it "works for puzzle input" $ do
         steps1 (listToArray puzzleInput) `shouldBe` 373160
-    describe "part 1 - steps to loop out with special-3 rule" $ do
+    describe "part 2 - steps to loop out with special-3 rule" $ do
       it "works for test input" $ do
         steps2 (listToArray testInput) `shouldBe` 10
       it "works for puzzle input" $ do
